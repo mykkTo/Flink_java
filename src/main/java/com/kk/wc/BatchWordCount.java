@@ -9,6 +9,13 @@ import org.apache.flink.api.java.operators.UnsortedGrouping;
 import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.util.Collector;
 
+/*
+ * @Description:    批处理有界流
+ * @Author:         阿K
+ * @CreateDate:     2022/5/19 21:15
+ * @Param:
+ * @Return:
+**/
 public class BatchWordCount {
     public static void main(String[] args) throws Exception {
         // 1. 创建执行环境

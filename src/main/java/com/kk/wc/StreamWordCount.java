@@ -9,23 +9,22 @@ import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.util.Collector;
 
 /*
- * @Description:    流处理有界流
+ * @Description:    流式计算（nc 测试无界流）
  * @Author:         阿K
- * @CreateDate:     2022/5/19 21:14
+ * @CreateDate:     2022/5/19 22:43
  * @Param:
  * @Return:
 **/
-public class BoundedStreamWordCount {
+public class StreamWordCount {
     public static void main(String[] args) throws Exception{
-
         // 1. 创建流式执行环境
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment ( );
 
-        // 2. 从文件读取数据 按行读取(存储的元素就是每行的文本)
-        DataStreamSource<String> listDateSource = env.readTextFile ("input/words.txt");
+        // 2. 读取文本流(远程机)
+        DataStreamSource<String> lineDataStream = env.socketTextStream ("101.34.180.133", 7777);
 
         // 3. 将每行数据进行分词，转换成二元组类型
-        SingleOutputStreamOperator<Tuple2<String, Long>> wordAndOne = listDateSource.flatMap ((String line, Collector<Tuple2<String,Long>> out) -> {
+        SingleOutputStreamOperator<Tuple2<String, Long>> wordAndOne = lineDataStream.flatMap ((String line, Collector<Tuple2<String,Long>> out) -> {
             String[] words = line.split (" ");
             for (String word : words) {
                 out.collect (Tuple2.of (word,1L));
@@ -43,6 +42,8 @@ public class BoundedStreamWordCount {
 
         // 7. 执行
         env.execute ();
+
+
 
     }
 }
