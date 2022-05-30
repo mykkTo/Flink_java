@@ -16,6 +16,11 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.22</version>
+        </dependency>
         <!-- 引入Flink相关依赖-->
         <dependency>
             <groupId>org.apache.flink</groupId>
